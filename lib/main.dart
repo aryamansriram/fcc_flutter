@@ -1,3 +1,5 @@
+
+import 'package:fcc_app/constants/routes.dart';
 import 'package:fcc_app/views/login_view.dart';
 import 'package:fcc_app/views/register_view.dart';
 import 'package:fcc_app/views/verify_email_view.dart';
@@ -18,9 +20,10 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/login': (context) => const LoginView(),
-        '/register': (context) => const RegisterView(),
-        '/notes': (context) => const NotesView() 
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const NotesView(),
+        verifyEmailRoute: (context) => const VerifyEmail()
       },
     ));
 }
@@ -96,7 +99,7 @@ class _NotesViewState extends State<NotesView> {
                   final shouldLogout = await showLogoutDialog(context);
                   if(shouldLogout){
                     await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil("/login", (_) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (_) => false);
                   }
                   break;
               }

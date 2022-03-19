@@ -1,10 +1,10 @@
+import 'package:fcc_app/constants/routes.dart';
 import 'package:fcc_app/utilities/show_error_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fcc_app/firebase_options.dart';
 import 'dart:developer' as devtools show log;
-
 class LoginView extends StatefulWidget {
   const LoginView({ Key? key }) : super(key: key);
 
@@ -72,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
                         );
                         //devtools.log(userCredential.toString());
                         Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/notes', (route) => false,);
+                          .pushNamedAndRemoveUntil(notesRoute, (route) => false,);
                       
     
                       }
@@ -102,7 +102,7 @@ class _LoginViewState extends State<LoginView> {
                 
                 TextButton(
                   onPressed: (){
-                    Navigator.of(context).pushNamedAndRemoveUntil("/register", (route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false);
                   }, 
                   child: const Text('Not registered yet? Register Now'))
                 ],
