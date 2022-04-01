@@ -160,7 +160,8 @@ class NotesService{
     final noteId = await db.insert(noteTable, {
       userIdColumn:owner.id,
       textColumn: text,
-      isSyncedWithCloudColumn: 1
+      isSyncedWithCloudColumn: 1,
+      
     });
 
     
@@ -237,17 +238,21 @@ class NotesService{
     
     final updatesCount = await db.update(noteTable, {
       textColumn:text,
-      isSyncedWithCloudColumn:0,
-    });
+      isSyncedWithCloudColumn:0,},
+      where: "id=?",
+      whereArgs: [note.id]);
 
     if (updatesCount == 0){
         throw CouldNotUpdateNotesException(); 
     }
     else {
       final updatedNote = await getNote(id: note.id);
+      print("Updated Note: ${updatedNote.toString()}");
       _notes.removeWhere((note)=>note.id== updatedNote.id);
       _notes.add(updatedNote);
       _notesStreamController.add(_notes);
+     
+      
       return updatedNote;
     }
 
