@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:fcc_app/extensions/filter.dart';
+import 'package:fcc_app/services/auth/auth_user.dart';
 import 'package:fcc_app/services/crud/crud_exceptions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
@@ -13,10 +15,20 @@ class NotesService{
   List<DatabaseNote> _notes = [];
 
   late final StreamController<List<DatabaseNote>> _notesStreamController;
-  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
+  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream.filter(
+    (note){
+      final currentUser= _user;
+      if(currentUser != null){
+        return note.userId==currentUser.id;
+      }
+      else{
+        throw UserShouldBeSetBeforeReadingAllNotesException();
+      }
+    }
+  );
 
   Database? _db;
-  
+  DatabaseUser? _user;
 
   static final NotesService _shared = NotesService._shared_instance();
   NotesService._shared_instance() {
@@ -259,13 +271,20 @@ class NotesService{
   }
 
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+  Future<DatabaseUser> getOrCreateUser({required String email,bool setAsCurrentUser = true}) async {
+
     await _ensureDbIsOpen();
     try{
       final user = await getUser(email: email);
+      if(setAsCurrentUser){
+        _user = user;
+      }
       return user;
     } on CouldNotFindUserException {
-      final createdUser = createUser(email: email);
+      final createdUser = await createUser(email: email);
+      if (setAsCurrentUser){
+        _user = createdUser;
+      }
       return createdUser;
     } catch(_){
       rethrow;

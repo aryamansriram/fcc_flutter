@@ -28,11 +28,11 @@ class _NotesViewState extends State<NotesView> {
   }
 
 
-  // @override
-  // void dispose() {
-  //   _notesService.close();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _notesService.close();
+    super.dispose();
+  }
 
   //21:46
    
@@ -56,6 +56,7 @@ class _NotesViewState extends State<NotesView> {
                     await AuthService.firebase().logOut();
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(loginRoute, (_) => false);
+                    
                   }
                   break;
               }

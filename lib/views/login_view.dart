@@ -77,8 +77,8 @@ class _LoginViewState extends State<LoginView> {
                           Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false);
                         }
                         //devtools.log(userCredential.toString());
-                        Navigator.of(context)
-                          .pushNamedAndRemoveUntil(notesRoute, (route) => false,);
+                        //Navigator.of(context)
+                        //  .pushNamedAndRemoveUntil(notesRoute, (route) => false,);
                       
     
                       } on UserNotFoundException catch(_){
