@@ -1,7 +1,7 @@
 import 'package:fcc_app/constants/routes.dart';
 import 'package:fcc_app/services/auth/auth_service.dart';
 import 'package:fcc_app/views/login_view.dart';
-import 'package:fcc_app/views/notes/new_note_view.dart';
+import 'package:fcc_app/views/notes/create_update_new_note_view.dart';
 import 'package:fcc_app/views/notes/notes_view.dart';
 import 'package:fcc_app/views/register_view.dart';
 import 'package:fcc_app/views/verify_email_view.dart';
@@ -23,7 +23,7 @@ void main() {
       registerRoute: (context) => const RegisterView(),
       notesRoute: (context) => const NotesView(),
       verifyEmailRoute: (context) => const VerifyEmail(),
-      newNotesRoute: (context) => const NewNoteView()
+      createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView()
     },
   ));
 }
