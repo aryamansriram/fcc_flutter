@@ -3,7 +3,7 @@ import 'package:fcc_app/services/crud/notes_service.dart';
 import 'package:fcc_app/utilities/dialogs/logout_dialog.dart';
 import 'package:fcc_app/views/notes/notes_list_view.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:developer' as developer;
 import '../../constants/routes.dart';
 import '../../enums/menu_action.dart';
 
@@ -18,7 +18,7 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> {
 
   late final NotesService _notesService;
-  String get userEmail => AuthService.firebase().currentUser!.email!;
+  String get userEmail => AuthService.firebase().currentUser!.email;
 
   @override
   void initState() {
@@ -30,7 +30,9 @@ class _NotesViewState extends State<NotesView> {
 
   @override
   void dispose() {
+    
     _notesService.close();
+    developer.log("Closing notes service");
     super.dispose();
   }
 
